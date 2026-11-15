@@ -1,241 +1,130 @@
-===============================================================================
-                      GIT COMMAND REFERENCE
-          Assignment: Git & GitHub Workflow and Test Case Design
-          Student   : Rashi  (Student ID: 2024eb02543)
-          Course    : Software Development Practices
-          Repository: https://github.com/RashiMalik02/github_sga
-===============================================================================
+GIT COMMANDS USED IN MY PROJECT
+Rashi (2024eb02543) - Software Development Practices
+Repository: https://github.com/RashiMalik02/github_sga
 
-This file lists every Git command used while building this project, in the
-order of the workflow. For each command the syntax, its purpose and the step
-in which it was used are given.
+Each entry gives the command as I typed it, followed by a short note on why
+I ran it and at which step.
 
 
--------------------------------------------------------------------------------
-1. REPOSITORY INITIALISATION
--------------------------------------------------------------------------------
-
+1. SETTING UP THE REPOSITORY
+----------------------------
 git init -b main
-    What it does : Creates a new, empty Git repository in the current folder
-                   (a hidden .git directory) and names the first branch "main"
-                   instead of the older default "master".
-    Where used   : Step 1 - run inside git-github-workflow-assignment/ after
-                   index.html and about.html had been created.
+    Turned my website folder into a Git repository, with "main" as the
+    first branch. (Step 1)
 
 git branch --show-current
-    What it does : Prints the name of the branch that is currently checked out.
-    Where used   : Step 1 - to confirm that the new repository starts on "main".
+    Quick check that I was on "main" straight after git init. (Step 1)
 
 
--------------------------------------------------------------------------------
-2. STAGING AND COMMITS
--------------------------------------------------------------------------------
-
-git add <file> [<file> ...]
-    What it does : Moves changes from the working directory into the staging
-                   area so that they are included in the next commit.
-    Where used   : git add index.html about.html    (initial commit)
-                   git add index.html               (second commit, undo demo)
-                   git add about.html               (feature commit)
-                   git add .gitignore               (.gitignore commit)
-                   git add git_commands.txt         (this reference file)
+2. STAGING AND COMMITTING
+-------------------------
+git add <file>
+    Put a changed file into the staging area so the next commit picks it up.
+    I used it on index.html, about.html, .gitignore and this file.
 
 git commit -m "<message>"
-    What it does : Saves the staged snapshot permanently in the repository
-                   history, together with a short descriptive message.
-    Where used   : git commit -m "Initial project setup"
-                   git commit -m "Update homepage content"
-                   git commit -m "Add feature page content"
-                   git commit -m "Add .gitignore for log files and temp folder"
-                   git commit -m "Add useful resources section to homepage"
-                   git commit -m "Add Git command reference"
-                   git commit -m "Add contact section to about page"
-                   git commit -m "Update Git command reference"
+    Saved what was staged as a commit. My messages, in order: "Initial project
+    setup", "Update homepage content", "Add feature page content", "Add
+    .gitignore for log files and temp folder", "Add useful resources section to
+    homepage", "Add Git command reference", "Add contact section to about page",
+    "Update Git command reference".
 
 git diff --stat
-    What it does : Summarises unstaged changes (files changed and the number of
-                   lines added or removed) without printing the full diff.
-    Where used   : Step 2B - to review the homepage edit before staging it.
+    Counted the lines I had changed in index.html before staging the second
+    commit (it showed 16 new lines).
 
 git diff --cached --stat
-    What it does : Same summary as above, but for changes that are already
-                   staged.
-    Where used   : Step 4 - to prove the changes were still staged after
-                   git reset --soft.
+    Proved that, after the soft reset, my 9 new lines were still staged.
 
 
--------------------------------------------------------------------------------
-3. BRANCH MANAGEMENT
--------------------------------------------------------------------------------
+3. WORKING WITH BRANCHES
+------------------------
+git branch feature
+    Made the "feature" branch at the same point as main.
 
-git branch <name>
-    What it does : Creates a new branch pointing at the current commit. It does
-                   not switch to it.
-    Where used   : git branch feature   (Step 2C)
-
-git checkout <branch>
-    What it does : Switches the working directory to the given branch.
-    Where used   : git checkout feature  (to work on about.html)
-                   git checkout main     (to return before merging)
+git checkout feature / git checkout main
+    Moved between the two branches - to feature for the About page edit,
+    then back to main for the merge.
 
 git branch
-    What it does : Lists all local branches; the current one is marked with *.
-    Where used   : After creating "feature" and in the final history check.
+    Listed my local branches; the * marks the one I am on.
 
 git branch -M main
-    What it does : Renames the current branch to "main", overwriting any
-                   existing name. Here it simply confirms that the primary
-                   branch is called "main" before the first push.
-    Where used   : Step 5 - just before pushing to GitHub.
+    Made sure the branch was named "main" right before the first push.
 
-git branch -vv
-    What it does : Lists local branches with their latest commit and the remote
-                   branch each one is tracking.
-    Where used   : Step 5 - to confirm main -> origin/main and
-                   feature -> origin/feature.
-
-git branch -r
-    What it does : Lists remote-tracking branches.
-    Where used   : Step 5 - to confirm origin/main and origin/feature exist.
+git branch -vv / git branch -r / git branch -a
+    After pushing: which remote branch each local branch follows, the remote
+    branches only, and everything together.
 
 
--------------------------------------------------------------------------------
-4. MERGE OPERATIONS
--------------------------------------------------------------------------------
-
+4. MERGING
+----------
 git merge --no-ff feature -m "Merge branch 'feature' into main"
-    What it does : Combines the commits of the "feature" branch into the
-                   current branch (main). The --no-ff option forces Git to
-                   create a separate merge commit even when a fast-forward
-                   would be possible, so the branch remains visible in the
-                   history graph.
-    Where used   : Step 2D - run while on main.
+    Brought the feature work into main. I added --no-ff so Git would make a
+    real merge commit and the branch would still show up in the graph.
 
 
--------------------------------------------------------------------------------
-5. HISTORY AND STATUS
--------------------------------------------------------------------------------
-
+5. CHECKING STATUS AND HISTORY
+------------------------------
 git status
-    What it does : Shows the current branch, staged changes, unstaged changes
-                   and untracked files.
-    Where used   : Throughout the workflow, before and after almost every step.
+    Ran this before and after almost every step to see what was modified,
+    staged or untracked.
 
 git log --oneline
-    What it does : Shows the commit history of the current branch, one commit
-                   per line (short hash + message).
-    Where used   : After each commit, after the merge and in the undo step.
+    One line per commit on the current branch - handy after each commit.
 
 git log --oneline --graph --all
-    What it does : Shows the history of all branches as a text graph, making
-                   branch and merge points visible.
-    Where used   : Step 2E - to verify the feature branch and the merge commit.
+    Drew both branches as a graph so the split and the merge are visible.
 
 
--------------------------------------------------------------------------------
-6. .GITIGNORE
--------------------------------------------------------------------------------
+6. IGNORING FILES
+-----------------
+.gitignore contains two rules:  *.log   and   temp/
 
-Contents of .gitignore:
-    *.log     -> ignore every file ending in .log
-    temp/     -> ignore the temp directory and everything inside it
-
-git check-ignore -v <path> [<path> ...]
-    What it does : Reports whether each path is ignored and, with -v, which
-                   line of which ignore file matched it.
-    Where used   : git check-ignore -v debug.log error.log temp/notes.txt
-                   Output confirmed that the two log files match "*.log" (line
-                   2) and temp/notes.txt matches "temp/" (line 5).
+git check-ignore -v debug.log error.log temp/notes.txt
+    Told me which line of .gitignore matched each of my three test files.
 
 git status --ignored
-    What it does : Shows ignored files in addition to the normal status output.
-    Where used   : Step 3 - to confirm debug.log, error.log and temp/ are
-                   ignored and were never committed.
-
-Note: debug.log, error.log and temp/notes.txt were created only to test the
-rules. They were never committed and were deleted after testing.
+    Listed the ignored test files, confirming none of them were tracked.
+    (I deleted the test files afterwards; they were never committed.)
 
 
--------------------------------------------------------------------------------
-7. UNDO OPERATIONS
--------------------------------------------------------------------------------
-
+7. UNDOING COMMITS
+------------------
 git reset --soft HEAD~1
-    What it does : Moves the current branch pointer back by one commit
-                   (HEAD~1 = the parent of the latest commit). With --soft,
-                   the staging area and the working directory are left
-                   untouched, so the changes from the removed commit remain
-                   staged and ready to be committed again.
-    Where used   : Step 4 - to undo the commit "Add useful resources section to
-                   homepage" (523a07d). The same staged changes were then
-                   committed again (b29be88) so the working tree was clean
-                   before pushing.
+    Took my "Add useful resources section to homepage" commit (523a07d) off
+    main but kept its changes staged, so I could simply commit them again.
 
 git revert --no-edit HEAD
-    What it does : Creates a new commit that reverses the changes made by the
-                   latest commit. --no-edit accepts Git's default message
-                   ("Revert ...") without opening an editor.
-    Where used   : Step 4 - to undo "Add contact section to about page"
-                   (bf5012b). The revert commit (65dbd78) removed the section
-                   again, and both commits are visible in the GitHub history.
+    Undid "Add contact section to about page" (bf5012b) by adding a new commit
+    (65dbd78) with the opposite change, so the undo is visible on GitHub.
 
-git reset --soft  vs  git revert
-    git reset --soft HEAD~1 rewrites local history: the latest commit
-    disappears from the branch, but its changes stay staged. It should only be
-    used on commits that have not been pushed or shared.
-
-    git revert <commit> does not remove anything. It creates a NEW commit that
-    applies the opposite of the chosen commit. History is preserved, which
-    makes it the safe choice for commits that have already been pushed to a
-    shared repository.
+Why both? reset --soft rewrites my own local history and is only safe before
+pushing; revert keeps the history and is the safe choice once work is shared.
 
 
--------------------------------------------------------------------------------
-8. REMOTE CONFIGURATION
--------------------------------------------------------------------------------
-
+8. CONNECTING TO GITHUB
+-----------------------
 git remote -v
-    What it does : Lists configured remotes with their fetch and push URLs.
-    Where used   : Step 5 - to check the existing remote configuration before
-                   making changes, and again to verify the new origin URL.
+    Showed which remote URL my repository pointed to, before and after the
+    change.
 
 git remote remove origin
-    What it does : Deletes the remote named "origin" from the local
-                   configuration. It does not affect any commits.
-    Where used   : Step 5 - to remove an earlier remote entry before
-                   connecting the repository to github_sga.
+    Deleted an old remote entry that pointed to a repository I no longer use.
 
 git remote add origin https://github.com/RashiMalik02/github_sga.git
-    What it does : Registers the GitHub repository as a remote named "origin".
-    Where used   : Step 5 - connecting the local repository to the public
-                   GitHub repository github_sga, which was created on GitHub
-                   after the local repository and its commits already existed.
+    Linked my local repository to github_sga, which I created on GitHub after
+    all of the local commits above already existed.
 
 
--------------------------------------------------------------------------------
-9. PUSH AND VERIFICATION
--------------------------------------------------------------------------------
-
+9. PUSHING AND CHECKING THE REMOTE
+----------------------------------
 git push -u origin main
-    What it does : Uploads the local main branch to origin and, with -u, sets
-                   origin/main as its upstream so that later pushes only need
-                   "git push".
-    Where used   : Step 5 - first upload of the main branch.
-
 git push -u origin feature
-    What it does : Uploads the feature branch and sets its upstream.
-    Where used   : Step 5 - upload of the feature branch.
+    Uploaded both branches; -u remembers the remote branch for later pushes.
 
 git push
-    What it does : Pushes the current branch to its configured upstream.
-    Where used   : After committing the updated git_commands.txt on main.
+    Sent my last commit on main, using the upstream set by -u.
 
 git ls-remote --heads origin
-    What it does : Asks the remote server directly which branches it has and
-                   which commit each one points to.
-    Where used   : Step 5 - to verify that both main and feature exist on
-                   GitHub with the same commit hashes as the local branches.
-
-===============================================================================
-Repository URL: https://github.com/RashiMalik02/github_sga
-===============================================================================
+    Asked GitHub directly which branches it holds; the commit IDs matched mine.
