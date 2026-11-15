@@ -3,7 +3,7 @@
           Assignment: Git & GitHub Workflow and Test Case Design
           Student   : Rashi  (Student ID: 2024eb02543)
           Course    : Software Development Practices
-          Repository: https://github.com/RashiMalik02/github_assignment
+          Repository: https://github.com/RashiMalik02/github_sga
 ===============================================================================
 
 This file lists every Git command used while building this project, in the
@@ -49,6 +49,8 @@ git commit -m "<message>"
                    git commit -m "Add .gitignore for log files and temp folder"
                    git commit -m "Add useful resources section to homepage"
                    git commit -m "Add Git command reference"
+                   git commit -m "Add contact section to about page"
+                   git commit -m "Update Git command reference"
 
 git diff --stat
     What it does : Summarises unstaged changes (files changed and the number of
@@ -169,6 +171,14 @@ git reset --soft HEAD~1
                    committed again (b29be88) so the working tree was clean
                    before pushing.
 
+git revert --no-edit HEAD
+    What it does : Creates a new commit that reverses the changes made by the
+                   latest commit. --no-edit accepts Git's default message
+                   ("Revert ...") without opening an editor.
+    Where used   : Step 4 - to undo "Add contact section to about page"
+                   (bf5012b). The revert commit (65dbd78) removed the section
+                   again, and both commits are visible in the GitHub history.
+
 git reset --soft  vs  git revert
     git reset --soft HEAD~1 rewrites local history: the latest commit
     disappears from the branch, but its changes stay staged. It should only be
@@ -186,13 +196,20 @@ git reset --soft  vs  git revert
 
 git remote -v
     What it does : Lists configured remotes with their fetch and push URLs.
-    Where used   : Step 5 - first to confirm that no remote existed yet, and
-                   again to verify the new origin URL.
+    Where used   : Step 5 - to check the existing remote configuration before
+                   making changes, and again to verify the new origin URL.
 
-git remote add origin https://github.com/RashiMalik02/github_assignment.git
+git remote remove origin
+    What it does : Deletes the remote named "origin" from the local
+                   configuration. It does not affect any commits.
+    Where used   : Step 5 - to remove an earlier remote entry before
+                   connecting the repository to github_sga.
+
+git remote add origin https://github.com/RashiMalik02/github_sga.git
     What it does : Registers the GitHub repository as a remote named "origin".
-    Where used   : Step 5 - connecting the local repository to the existing,
-                   empty GitHub repository.
+    Where used   : Step 5 - connecting the local repository to the public
+                   GitHub repository github_sga, which was created on GitHub
+                   after the local repository and its commits already existed.
 
 
 -------------------------------------------------------------------------------
@@ -211,7 +228,7 @@ git push -u origin feature
 
 git push
     What it does : Pushes the current branch to its configured upstream.
-    Where used   : After committing this git_commands.txt file on main.
+    Where used   : After committing the updated git_commands.txt on main.
 
 git ls-remote --heads origin
     What it does : Asks the remote server directly which branches it has and
@@ -220,5 +237,5 @@ git ls-remote --heads origin
                    GitHub with the same commit hashes as the local branches.
 
 ===============================================================================
-Repository URL: https://github.com/RashiMalik02/github_assignment
+Repository URL: https://github.com/RashiMalik02/github_sga
 ===============================================================================
