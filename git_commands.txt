@@ -1,130 +1,42 @@
-GIT COMMANDS USED IN MY PROJECT
-Rashi (2024eb02543) - Software Development Practices
-Repository: https://github.com/RashiMalik02/github_sga
+Rashi | 2024eb02543 | github.com/RashiMalik02/github_sga
+My command log for the SGA, in the order I needed each one.
 
-Each entry gives the command as I typed it, followed by a short note on why
-I ran it and at which step.
+[setup]
+git init -b main                    -> made my site folder a repo, branch called main from the start
+git branch --show-current           -> double-checked I was sitting on main
 
+[saving work]
+git add index.html about.html       -> picked both pages for my very first snapshot
+git commit -m "..."                 -> wrote each snapshot into history with a message (11 times overall)
+git diff --stat                     -> saw my homepage edit was 16 lines before I staged it
+git diff --cached --stat            -> after the soft reset, proved my 9 lines were still waiting to be committed
 
-1. SETTING UP THE REPOSITORY
-----------------------------
-git init -b main
-    Turned my website folder into a Git repository, with "main" as the
-    first branch. (Step 1)
+[branches]
+git branch feature                  -> opened a side line called feature
+git checkout feature                -> hopped over to it to edit about.html
+git checkout main                   -> hopped back so I could merge
+git branch / git branch -a          -> listed branches, * shows where I am
 
-git branch --show-current
-    Quick check that I was on "main" straight after git init. (Step 1)
+[merge]
+git merge --no-ff feature           -> pulled feature into main and forced a real merge commit (d949bc2)
 
+[looking around]
+git status                          -> my "what's going on" command, used constantly
+git log --oneline                   -> compact list of snapshots
+git log --oneline --graph --all     -> drew the fork and the join as ASCII art
 
-2. STAGING AND COMMITTING
--------------------------
-git add <file>
-    Put a changed file into the staging area so the next commit picks it up.
-    I used it on index.html, about.html, .gitignore and this file.
+[ignoring]
+git check-ignore -v <files>         -> showed which .gitignore line caught debug.log, error.log and temp/notes.txt
 
-git commit -m "<message>"
-    Saved what was staged as a commit. My messages, in order: "Initial project
-    setup", "Update homepage content", "Add feature page content", "Add
-    .gitignore for log files and temp folder", "Add useful resources section to
-    homepage", "Add Git command reference", "Add contact section to about page",
-    "Update Git command reference".
+[undo]
+git reset --soft HEAD~1             -> pulled 523a07d off main locally, kept its lines staged
+git revert --no-edit HEAD           -> cancelled bf5012b with a new opposite commit (65dbd78) that GitHub shows
 
-git diff --stat
-    Counted the lines I had changed in index.html before staging the second
-    commit (it showed 16 new lines).
-
-git diff --cached --stat
-    Proved that, after the soft reset, my 9 new lines were still staged.
-
-
-3. WORKING WITH BRANCHES
-------------------------
-git branch feature
-    Made the "feature" branch at the same point as main.
-
-git checkout feature / git checkout main
-    Moved between the two branches - to feature for the About page edit,
-    then back to main for the merge.
-
-git branch
-    Listed my local branches; the * marks the one I am on.
-
-git branch -M main
-    Made sure the branch was named "main" right before the first push.
-
-git branch -vv / git branch -r / git branch -a
-    After pushing: which remote branch each local branch follows, the remote
-    branches only, and everything together.
-
-
-4. MERGING
-----------
-git merge --no-ff feature -m "Merge branch 'feature' into main"
-    Brought the feature work into main. I added --no-ff so Git would make a
-    real merge commit and the branch would still show up in the graph.
-
-
-5. CHECKING STATUS AND HISTORY
-------------------------------
-git status
-    Ran this before and after almost every step to see what was modified,
-    staged or untracked.
-
-git log --oneline
-    One line per commit on the current branch - handy after each commit.
-
-git log --oneline --graph --all
-    Drew both branches as a graph so the split and the merge are visible.
-
-
-6. IGNORING FILES
------------------
-.gitignore contains two rules:  *.log   and   temp/
-
-git check-ignore -v debug.log error.log temp/notes.txt
-    Told me which line of .gitignore matched each of my three test files.
-
-git status --ignored
-    Listed the ignored test files, confirming none of them were tracked.
-    (I deleted the test files afterwards; they were never committed.)
-
-
-7. UNDOING COMMITS
-------------------
-git reset --soft HEAD~1
-    Took my "Add useful resources section to homepage" commit (523a07d) off
-    main but kept its changes staged, so I could simply commit them again.
-
-git revert --no-edit HEAD
-    Undid "Add contact section to about page" (bf5012b) by adding a new commit
-    (65dbd78) with the opposite change, so the undo is visible on GitHub.
-
-Why both? reset --soft rewrites my own local history and is only safe before
-pushing; revert keeps the history and is the safe choice once work is shared.
-
-
-8. CONNECTING TO GITHUB
------------------------
-git remote -v
-    Showed which remote URL my repository pointed to, before and after the
-    change.
-
-git remote remove origin
-    Deleted an old remote entry that pointed to a repository I no longer use.
-
-git remote add origin https://github.com/RashiMalik02/github_sga.git
-    Linked my local repository to github_sga, which I created on GitHub after
-    all of the local commits above already existed.
-
-
-9. PUSHING AND CHECKING THE REMOTE
-----------------------------------
-git push -u origin main
-git push -u origin feature
-    Uploaded both branches; -u remembers the remote branch for later pushes.
-
-git push
-    Sent my last commit on main, using the upstream set by -u.
-
-git ls-remote --heads origin
-    Asked GitHub directly which branches it holds; the commit IDs matched mine.
+[github]
+git remote -v                       -> printed where origin pointed, before and after
+git remote remove origin            -> dropped a stale link to a repo I had deleted
+git remote add origin <github_sga>  -> linked to github_sga, made after my local commits existed
+git push -u origin main             -> first upload of main, remembers the target
+git push -u origin feature          -> same for feature
+git push                            -> later uploads of main
+git ls-remote --heads origin        -> asked GitHub for its branch tips; matched mine
